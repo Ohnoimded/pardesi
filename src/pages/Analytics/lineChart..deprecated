@@ -1,0 +1,139 @@
+// import { data } from "autoprefixer";
+// import { LineChart } from "lucide-react";
+// import { useEffect, useRef } from "react";
+// import axios from "axios";
+// import * as d3 from "d3";
+
+// const LineChartPlot = () => {
+//     const ref = useRef();
+
+//     const fetchData = async () => {
+//         const response = await axios.get(`https://carmagnole.ohnoimded.com/api/analytics/plotdata/?plot_type=linechart&timeperiod=1m`)
+//         console.log(response.data);
+//         console.log(JSON.parse(response.data));
+//         return response.data;
+//     }
+//     useEffect(() => {
+//         // set the dimensions and margins of the graph
+//         const margin = { top: 30, right: 20, bottom: 70, left: 40 },
+//             width = 800 - margin.left - margin.right,
+//             height = 500 - margin.top - margin.bottom;
+
+
+
+
+//         const svg = d3.select("#linechart")
+//             .append("svg")
+//             .attr("width", width + margin.left + margin.right)
+//             .attr("height", height + margin.top + margin.bottom)
+//             .append("g")
+//             .attr("transform", `translate(${margin.left},${margin.top})`);
+
+//         // const dataset = [{"date": "2024-10-18", "positive": "0.07658", "negative": "0.05881"}, {"date": "2024-10-17", "positive": "0.06971", "negative": "0.09110"}]
+//         const dataset = [{ "date": "2024-10-18", "positive": "0.07680", "negative": "0.05832" }, { "date": "2024-10-17", "positive": "0.07412", "negative": "0.05901" }, { "date": "2024-10-16", "positive": "0.07163", "negative": "0.06114" }, { "date": "2024-10-15", "positive": "0.07085", "negative": "0.05901" }, { "date": "2024-10-14", "positive": "0.08520", "negative": "0.06936" }, { "date": "2024-10-10", "positive": "0.06946", "negative": "0.06021" }, { "date": "2024-10-09", "positive": "0.07292", "negative": "0.05846" }, { "date": "2024-10-08", "positive": "0.07288", "negative": "0.06181" }, { "date": "2024-10-07", "positive": "0.07365", "negative": "0.06137" }, { "date": "2024-10-06", "positive": "0.07528", "negative": "0.06314" }, { "date": "2024-10-05", "positive": "0.07431", "negative": "0.05907" }, { "date": "2024-10-04", "positive": "0.07772", "negative": "0.05504" }, { "date": "2024-10-03", "positive": "0.07312", "negative": "0.06262" }, { "date": "2024-10-02", "positive": "0.06738", "negative": "0.06697" }, { "date": "2024-10-01", "positive": "0.07192", "negative": "0.06099" }, { "date": "2024-09-30", "positive": "0.07384", "negative": "0.05999" }, { "date": "2024-09-29", "positive": "0.07424", "negative": "0.06800" }, { "date": "2024-09-25", "positive": "0.07632", "negative": "0.05110" }, { "date": "2024-09-24", "positive": "0.07233", "negative": "0.06002" }, { "date": "2024-09-23", "positive": "0.08078", "negative": "0.05492" }, { "date": "2024-09-22", "positive": "0.07619", "negative": "0.05701" }, { "date": "2024-09-21", "positive": "0.07934", "negative": "0.05916" }, { "date": "2024-09-20", "positive": "0.07651", "negative": "0.05708" }, { "date": "2024-09-19", "positive": "0.07288", "negative": "0.05987" }, { "date": "2024-09-18", "positive": "0.07781", "negative": "0.06561" }];
+
+//         // fetchData();
+
+//         const parseDate = d3.timeParse("%Y-%m-%d");
+
+//         dataset.forEach(d => {
+//             d.date = parseDate(d.date);
+//             d.positive = parseFloat(d.positive)*5;
+//             d.negative = parseFloat(d.negative)*5;
+//         });
+
+//         dataset.sort((a, b) => b.date - a.date);
+
+//         // Scale 
+//         const x = d3.scaleTime().domain(d3.extent(dataset, d => d.date)).range([0, width]);
+//         const y = d3.scaleLinear().domain([0, 0.8]).range([height, 0]);
+
+//         console.log(dataset.length)
+//         //Grid
+//         const xAxisGrid = d3.axisBottom(x).tickSize(-height).tickFormat('').ticks(dataset.length);
+//         const yAxisGrid = d3.axisLeft(y).tickSize(-width).tickFormat('').ticks(dataset.length);
+
+//         svg.append('g')
+//             .attr('class', 'grid')
+//             .attr('transform', `translate(0,${height})`)
+//             .call(xAxisGrid)
+//             .selectAll("line")
+//             .style("stroke", "gray")  
+//             .style("stroke-opacity", 0.5)  
+//             .style("stroke-width", 1);
+
+//         svg.append('g')
+//             .attr('class', 'grid')
+//             .call(yAxisGrid)
+//             .selectAll("line")
+//             .style("stroke", "gray")  
+//             .style("stroke-opacity", 0.5)  
+//             .style("stroke-width", 1);
+
+
+//         // console.log("max: ", Math.max(d3.max(dataset, d => d.positive), d3.max(dataset, d => d.negative)))
+//         // console.log("data: ", dataset)
+
+//         svg.append("g")
+//             .attr("transform", `translate(0,${height})`)
+//             .call(d3.axisBottom(x).ticks(d3.timeDay.every(1)).tickFormat(d3.timeFormat("%m-%d")))
+//             .selectAll("text")
+//             .style("text-anchor", "end")
+//             .attr("dx", "-.8em")
+//             .attr("dy", ".15em")
+//             .attr("transform", "rotate(-65)");
+
+//         svg.append("g").call(d3.axisLeft(y));
+
+
+//         // Line generators
+//         const line1 = d3.line()
+//             .x(d => x(d.date))
+//             .y(d => y(d.positive))
+//             .curve(d3.curveMonotoneX);
+
+//         const line2 = d3.line()
+//             .x(d => x(d.date))
+//             .y(d => y(d.negative))
+//             .curve(d3.curveMonotoneX);
+
+//         const tooltip = d3.select("#linechart")
+//             .append("div")
+//             .style("position", "absolute")
+//             .style("visibility", "hidden")
+//             .style("background", "white")
+//             .style("border", "1px solid #ccc")
+//             .style("padding", "5px")
+//             .style("border-radius", "4px")
+//             .style("pointer-events", "none");
+
+//         const appendLine = (data, lineGenerator, color) => {
+//             const path = svg.append("path")
+//                 .datum(data)
+//                 .attr("fill", "none")
+//                 .attr("stroke", color)
+//                 .attr("stroke-width", 2)
+//                 .attr("d", lineGenerator);
+
+//             const totalLength = path.node().getTotalLength();
+
+//             path
+//                 .attr("stroke-dasharray", totalLength + " " + totalLength)
+//                 .attr("stroke-dashoffset", totalLength)
+//                 .transition()
+//                 .duration(1200)  // Smooth animation
+//                 .ease(d3.easeLinear)  // Constant speed
+//                 .attr("stroke-dashoffset", 0);
+//         };
+
+//         // Plot both lines with smooth animation
+//         appendLine(dataset, line1, "steelblue");
+//         appendLine(dataset, line2, "red");
+
+//     }, []);
+
+
+//     return <div width={850} height={500} id="linechart" ref={ref} />;
+// };
+
+// export default LineChartPlot;
