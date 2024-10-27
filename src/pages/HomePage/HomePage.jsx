@@ -179,10 +179,10 @@ const HomePage = () => {
         } catch (err) {
             // console.error('Error fetching news:', err);
             if (err.response && err.response.status === 404) {
-                navigate('/404', { replace: true });
+                navigate('/404.html', { replace: true });
             }
             else if (err.response && err.response.status === 503) {
-                navigate('/503', { replace: true });
+                navigate('/50x.html', { replace: true });
             }
             setIsLoading(false);
         }

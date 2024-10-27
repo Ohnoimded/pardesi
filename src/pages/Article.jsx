@@ -22,6 +22,10 @@ const Article = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    
+    useEffect(() => {
         const fetchArticle = async () => {
             try {
                 const response = await axios.get(`https://carmagnole.ohnoimded.com/api/news/article/${slug}/`, {
