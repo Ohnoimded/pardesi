@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { NewsCard, NewsCardExtended } from './NewsCard';
@@ -138,6 +138,7 @@ const HomePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isInitPageReady, setIsInitPageReady] = useState(false)
     const [isRestPageReady, setIsRestPageReady] = useState(false)
+    const prevIsInitialized = useRef(isInitialized);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -189,6 +190,7 @@ const HomePage = () => {
     };
 
     useEffect(() => {
+        if (isInitialized && !prevIsInitialized.current && apiToken !== null) {
         const initialLoad = async (n) => {
             for (let i = 1; i <= n; i++) {
                 if (apiToken) {
@@ -196,13 +198,14 @@ const HomePage = () => {
                 }
             }
             setPage(n + 1);
-        };
+        }
         if (screen.availWidth <= 480) {           // FOr mobile screen. Not designed for mobile screens, but this works to some extent. Nothing is meant for user readability anyways.
             initialLoad(5);
         } else {
             initialLoad(4);
-
-        }
+        
+        }}
+        prevIsInitialized.current = isInitialized;
     }, [isInitialized]);
 
     useEffect(() => {
