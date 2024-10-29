@@ -190,12 +190,11 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        if (isInitialized && !prevIsInitialized.current && apiToken !== null) {
+        if (isInitialized && apiToken) {
         const initialLoad = async (n) => {
             for (let i = 1; i <= n; i++) {
-                if (apiToken) {
                     await getNews(i);
-                }
+                
             }
             setPage(n + 1);
         }
@@ -205,8 +204,7 @@ const HomePage = () => {
             initialLoad(4);
         
         }}
-        prevIsInitialized.current = isInitialized;
-    }, [isInitialized]);
+    }, [isInitialized, apiToken]);
 
     useEffect(() => {
         const handleScroll = () => {

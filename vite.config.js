@@ -37,7 +37,7 @@ export default defineConfig({
     //   include: ['process'],
     //   globals: { global: true, process: true },
     // }),
-    visualizer({ open: true, filename: 'bundle-visualization.html' }),
+    // visualizer({ open: true, filename: 'bundle-visualization.html' }),
     // chunkSplitPlugin(),
     // ViteMinifyPlugin(),
     compression(),
