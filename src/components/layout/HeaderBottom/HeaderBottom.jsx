@@ -88,7 +88,7 @@ const HeaderBottom = () => {
         <WeatherWidget></WeatherWidget>
       </HeaderSnippets>
       <HeaderCenter>
-        <div>LE CARMAGNOLE</div>
+        <div>LA CARMAGNOLE</div>
         <div className='date-div'>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
       </HeaderCenter>
       <MarketData/>

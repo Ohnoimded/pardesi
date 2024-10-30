@@ -28,7 +28,7 @@ margin-top: 10px;
 function FooterContainer () {
   return (
     <Footer>
-    <footer className='footer'>© Le Carmagnole - <span>{new Date().getFullYear()}</span></footer>
+    <footer className='footer'>© La Carmagnole - <span>{new Date().getFullYear()}</span></footer>
     </Footer>
   );
 }

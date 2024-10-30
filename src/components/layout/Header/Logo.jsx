@@ -24,7 +24,7 @@ const LogoStyle = styled.div`
 
 export default function Logo() {
     return (<LogoStyle>
-        <Link to="/">LE CARMAGNOLE</Link>
+        <Link to="/">LA CARMAGNOLE</Link>
 
     </LogoStyle>
 
