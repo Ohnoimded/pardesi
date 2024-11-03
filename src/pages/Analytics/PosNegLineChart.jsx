@@ -32,6 +32,7 @@ const PosNegLineChart = () => {
         d.positive = parseFloat(d.positive);
         d.negative = parseFloat(d.negative);
       });
+      fetchedData.sort((a, b) => new Date(a.date) - new Date(b.date));
       setData(fetchedData);
     } catch (error) {
       console.error('Error fetching data:', error);
