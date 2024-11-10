@@ -88,7 +88,7 @@ const Article = () => {
                     <ContentContainer>
                         <div className='article-headline p-5 text-3xl text-justify'>{article.headline}</div>
                         <div className='article-meta publishdate' style={{display:"flex", flexDirection:'row', justifyContent:"space-between",alignItems:'center', gap:'10px', padding: "20px"}}>
-                            <div className='article-publishdate' style={{fontSize:'13px'}}>Published Date: {`${day} ${new Date(article.publishdate.slice(0, 10).split('/')).toLocaleString('default', { month: 'long' })}, ${year}`}</div>
+                            <div className='article-publishdate' style={{fontSize:'13px'}}>Published on: {`${day} ${new Date(article.publishdate.slice(0, 10).split('/')).toLocaleString('default', { month: 'long' })}, ${year}`}</div>
                         </div>
                         {(article.imageurl != 'nan') ? <img className='p-5' src={article.imageurl.slice(0,article.imageurl.length-7)+"1000.jpg"} alt={article.headline} /> : <></>}
                         <div className='article-meta' style={{display:"flex", flexDirection:'row', justifyContent:"space-between",alignItems:'center', gap:'10px', padding: "20px"}}>
